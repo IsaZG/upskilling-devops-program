@@ -8,24 +8,29 @@ while getopts ${opstring} arg; do
         o)
           # Verificar que los files le pertenezcan a ese owner, hacer lo mismo para month
           # Validar argumentos incorrectos
-          filenames=$(ls ./*)
+          filenames=$(find ./* -user $2)
            for file in $filenames; do
             numberOfLines=$(wc -l < ./$file)
             output=$(stat --printf="Name: %n" $file)
-           echo "File: $output, Lines: $numberOfLines $file"
-           done
+            echo "File: $output, Lines: $numberOfLines $file"
+            done
             ;;
         m)
-            echo "Option m was choosen"
-            ;;
+           filenames=$(ls -lh | grep $2 | awk '{print $9}')
+           for file in $filenames; do
+           numberOfLines=$(wc -l < ./$file)
+           output=$(stat --printf="Name %n" $file)
+           echo "File: $output, Lines: $numberOfLines $file"
+           done
+           ;;
         :)
-            echo "$0: Must supply ang argument tp -$OPTARG." >&2
-            exit 1
-            ;;
+           echo "$0: Must supply ang argument tp -${OPTARG}." >&2
+           exit 1
+           ;;
         ?)
-            echo "Invalid option: -${OPTARG}."
-            exit 2
-            ;;
+           echo "Invalid option: -${OPTARG}."
+           exit 2
+           ;;
      esac
 done
 
@@ -37,6 +42,5 @@ done
 #   numberOfLines=$(wc -l < ./$file)
 #    echo "$file has $numberOfLines lines"
 #done
-
 
 
