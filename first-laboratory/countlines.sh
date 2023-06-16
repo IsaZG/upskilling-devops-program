@@ -21,7 +21,7 @@ while getopts ${opstring} arg; do
     case ${arg} in
         o)
            echo "Looking for files where the owner is: $2"
-           filenames=$(find ./* -user $2)
+           filenames=$(find . -maxdepth 1 -type f -user $2)
            for file in $filenames; do
             numberOfLines=$(wc -l < ./$file)
             output=$(stat --printf="Name: %n" $file)
@@ -30,7 +30,7 @@ while getopts ${opstring} arg; do
            ;;
         m)
            echo "Looking for files where the month is: $2"
-           filenames=$(ls -lh | grep $2 | awk '{print $9}')
+           filenames=$(ls -l | grep -v "^d"  | grep $2 | awk '{print $9}')
            for file in $filenames; do
             numberOfLines=$(wc -l < ./$file)
             output=$(stat --printf="Name %n" $file)
