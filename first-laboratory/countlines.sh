@@ -7,6 +7,9 @@ You should pass: \n
 1. name_of_the_file.sh -o username_you_want \n
 2. name_of_the_file -m month_you_want \n"
 
+if [ ${#*} -eq 0 ]; then
+    echo -e ${help_message}
+fi
 
 while getopts ${opstring} arg; do
 
@@ -24,7 +27,7 @@ while getopts ${opstring} arg; do
             output=$(stat --printf="Name: %n" $file)
             echo "File: $output, Lines: $numberOfLines $file"
            done
-            ;;
+           ;;
         m)
            echo "Looking for files where the month is: $2"
            filenames=$(ls -lh | grep $2 | awk '{print $9}')
