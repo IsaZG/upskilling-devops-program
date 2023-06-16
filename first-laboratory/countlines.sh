@@ -1,46 +1,42 @@
 #!/bin/bash
 
-opstring=":om"
+opstring="o:m:"    
+
+help_message="More than one argument, an empty argument or an invalid argument was provided\n
+You should pass: \n
+1. name_of_the_file.sh -o username_you_want \n
+2. name_of_the_file -m month_you_want \n"
 
 
 while getopts ${opstring} arg; do
+
+    if [ ${#*} -gt 2 ]; then
+     echo -e ${help_message}
+     exit 1
+    fi
+
     case ${arg} in
         o)
-          # Verificar que los files le pertenezcan a ese owner, hacer lo mismo para month
-          # Validar argumentos incorrectos
-          filenames=$(find ./* -user $2)
+           echo "Looking for files where the owner is: $2"
+           filenames=$(find ./* -user $2)
            for file in $filenames; do
             numberOfLines=$(wc -l < ./$file)
             output=$(stat --printf="Name: %n" $file)
             echo "File: $output, Lines: $numberOfLines $file"
-            done
+           done
             ;;
         m)
+           echo "Looking for files where the month is: $2"
            filenames=$(ls -lh | grep $2 | awk '{print $9}')
            for file in $filenames; do
-           numberOfLines=$(wc -l < ./$file)
-           output=$(stat --printf="Name %n" $file)
-           echo "File: $output, Lines: $numberOfLines $file"
+            numberOfLines=$(wc -l < ./$file)
+            output=$(stat --printf="Name %n" $file)
+            echo "File: $output, Lines: $numberOfLines $file"
            done
            ;;
-        :)
-           echo "$0: Must supply ang argument tp -${OPTARG}." >&2
-           exit 1
-           ;;
         ?)
-           echo "Invalid option: -${OPTARG}."
+           echo -e ${help_message}
            exit 2
            ;;
      esac
 done
-
-
-#filenames=$(ls ./*)
-
-
-#for file in $filenames; do
-#   numberOfLines=$(wc -l < ./$file)
-#    echo "$file has $numberOfLines lines"
-#done
-
-
