@@ -1,0 +1,25 @@
+version: '3'
+name: module2-lab
+
+services:
+  mysql:
+    image: mysql/mysql-server:latest
+    ports:
+      - 3306:3306
+    container_name: database
+    environment:
+      MYSQL_DATABASE: "mysql"
+      MYSQL_ROOT_PASSWORD: "password"
+    networks:
+      - second-lab-network
+  
+  atlas-template:
+    build: ./image
+    ports:
+      - 8080:80
+    container_name: application
+    networks:
+      - second-lab-network
+  
+networks:
+    second-lab-network:
