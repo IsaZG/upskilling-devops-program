@@ -1,0 +1,16 @@
+* For the first part of the laboratory use the following instructions:
+1. Download the bash-create-image-container-sh in the folder you want to run the project.
+2. The bash will download a repo from the next url: https://github.com/IsaZG/atlas-template.
+3. That repo contains the template selected from the sugested url in the Lab specification
+and the dockerfile that will help you to run the image for the website.
+4. You just need to download the bash from this repo: https://github.com/IsaZG/upskilling-devops-program which is in the second-laboratoy folder,
+and run the bash file in the selected directory.
+
+* For the second part of the laboratory
+1. Download the bash-docker-compose-image.sh in the folder you want to run the project.
+2. The bash will download a repo from the next url: https://github.com/IsaZG/atlas-template.
+3. That repo contains the template selected from the sugested url in the Lab specification, the docker-compose
+file that will generate the images and containers, and the dockerfile that will help you to generate
+the image for the web-container
+
+Note: The docker-compose.yml was also added to the repo as it was a requirement of the lab.
